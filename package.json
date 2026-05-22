@@ -1,0 +1,119 @@
+{
+  "name": "@aromedia/contracts-sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for the Aro Media on-chain ecosystem (SBT identity, nomination, RWA, registry, multisig, forced transfer).",
+  "license": "BUSL-1.1",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
+      "import": "./dist/hooks/index.js",
+      "require": "./dist/hooks/index.cjs"
+    },
+    "./abis": {
+      "types": "./dist/abis.d.ts",
+      "import": "./dist/abis.js",
+      "require": "./dist/abis.cjs"
+    },
+    "./addresses": {
+      "types": "./dist/addresses.d.ts",
+      "import": "./dist/addresses.js",
+      "require": "./dist/addresses.cjs"
+    },
+    "./chains": {
+      "types": "./dist/chains.d.ts",
+      "import": "./dist/chains.js",
+      "require": "./dist/chains.cjs"
+    },
+    "./workflows": {
+      "types": "./dist/workflows/index.d.ts",
+      "import": "./dist/workflows/index.js",
+      "require": "./dist/workflows/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "generate": "tsx scripts/generate.ts",
+    "build": "tsup --config ./tsup.config.json src/index.ts src/hooks/index.ts src/generated/abis.ts src/generated/addresses.ts src/chains.ts src/workflows/index.ts --format esm,cjs --dts --sourcemap --target es2022 --external react --external wagmi --external @tanstack/react-query --external viem",
+    "dev": "tsup --config ./tsup.config.json src/index.ts --format esm --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run build && changeset publish",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "viem": "^2.21.0"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "wagmi": "^2 || ^3",
+    "@tanstack/react-query": "^5"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "wagmi": {
+      "optional": true
+    },
+    "@tanstack/react-query": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.0",
+    "@tanstack/react-query": "^5.0.0",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0",
+    "wagmi": "^3.6.10"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aromediainc/contracts-sdk.git"
+  },
+  "homepage": "https://github.com/aromediainc/contracts-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/aromediainc/contracts-sdk/issues"
+  },
+  "keywords": [
+    "aro",
+    "aromedia",
+    "ethereum",
+    "viem",
+    "wagmi",
+    "sbt",
+    "rwa",
+    "soulbound",
+    "erc-5192",
+    "kyc"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,14 @@
+# npm uses package.json "files" as an allowlist; this .npmignore is a
+# belt-and-braces guard against accidentally shipping repo internals.
+.github
+.changeset
+scripts
+tsup.config.ts
+tsup.config.json
+tsconfig.json
+.gitignore
+CONTRIBUTING.md
+*.tsbuildinfo
+node_modules
+coverage
+.nyc_output

@@ -1,0 +1,25 @@
+node_modules
+dist
+*.tsbuildinfo
+
+# Local env
+.env
+.env.local
+
+# OS / editor cruft
+.DS_Store
+.idea/
+.vscode/
+
+# Test + coverage outputs
+coverage
+.nyc_output
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# tsup sometimes leaves a bundled config in cwd when interrupted
+tsup.config.bundled_*.mjs
