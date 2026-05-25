@@ -1,6 +1,6 @@
 {
   "name": "@aromedia/contracts-sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TypeScript SDK for the Aro Media on-chain ecosystem (SBT identity, nomination, RWA, registry, multisig, forced transfer).",
   "license": "MIT",
   "type": "module",
