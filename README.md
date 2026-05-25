@@ -124,4 +124,4 @@ This repo uses [Changesets](https://github.com/changesets/changesets) for semver
 
 ## License
 
-BUSL-1.1 © Aro Media Inc.
+[MIT](./LICENSE) © Aro Media Inc.
