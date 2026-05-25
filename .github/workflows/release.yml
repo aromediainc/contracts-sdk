@@ -37,7 +37,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
           # registry-url is required so `npm publish` knows where to push
           # and how to interpret NODE_AUTH_TOKEN.
