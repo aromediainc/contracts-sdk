@@ -86,10 +86,15 @@ export function createAroSdk(opts: CreateAroSdkOpts): AroSdk {
   // Build a default PublicClient if the caller didn't pass a transport. We
   // intentionally do NOT bind a walletClient here — wallet state is the
   // dapp's concern, the SDK just consumes whatever it's given.
+  // Cast through `unknown` because viem ≥2.50 narrows the PublicClient
+  // produced here to `{ account: { address: undefined, type: "json-rpc" } }`,
+  // while the per-contract client factories expect the looser `PublicClient`
+  // shape with `account: undefined`. The runtime value is the same — viem
+  // never reads `account` on a public client — so this cast is sound.
   const publicClient = createPublicClient({
     chain: opts.chain,
     transport: opts.transport ?? http(),
-  });
+  }) as unknown as PublicClient;
 
   const resolve = (name: keyof AroAddressOverrides): `0x${string}` => {
     return overrides[name] ?? getAddress(chainId, name);
