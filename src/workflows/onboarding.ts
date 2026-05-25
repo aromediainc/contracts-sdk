@@ -46,16 +46,39 @@ export interface MembershipStatus {
 /**
  * One-call read for the dapp's access-gate page. Returns whether the
  * connected wallet holds an SBT and, if so, decoded member data.
+ *
+ * Implementation note: reads are issued via `publicClient.readContract`
+ * with the ABI rather than the typed contract instance's `.read`
+ * namespace. viem ≥2.50 narrows `contract.read.*` based on whether a
+ * walletClient was bound at construction time; bypassing that gives us a
+ * stable, version-independent signature.
  */
 export async function checkMembershipStatus(
   sdk: AroSdk,
   account: `0x${string}`,
 ): Promise<MembershipStatus> {
-  const hasSBT = (await sdk.sbt.read.hasSBT([account])) as boolean;
+  const sbtAddress = sdk.addressOf("AroSBT");
+
+  const hasSBT = (await sdk.publicClient.readContract({
+    address: sbtAddress,
+    abi: AroSBT_ABI,
+    functionName: "hasSBT",
+    args: [account],
+  })) as boolean;
   if (!hasSBT) return { hasSBT: false };
 
-  const tokenId = (await sdk.sbt.read.tokenOfMember([account])) as bigint;
-  const data = (await sdk.sbt.read.getMemberData([account])) as {
+  const tokenId = (await sdk.publicClient.readContract({
+    address: sbtAddress,
+    abi: AroSBT_ABI,
+    functionName: "tokenOfMember",
+    args: [account],
+  })) as bigint;
+  const data = (await sdk.publicClient.readContract({
+    address: sbtAddress,
+    abi: AroSBT_ABI,
+    functionName: "getMemberData",
+    args: [account],
+  })) as {
     memberId: bigint;
     issuanceDate: bigint;
     tier: number;
@@ -91,9 +114,19 @@ export async function getNominationSnapshot(
   sdk: AroSdk,
   candidate: `0x${string}`,
 ): Promise<NominationSnapshot> {
+  const nominationAddress = sdk.addressOf("AroNomination");
   const [nomination, threshold] = (await Promise.all([
-    sdk.nomination.read.getNomination([candidate]),
-    sdk.nomination.read.threshold(),
+    sdk.publicClient.readContract({
+      address: nominationAddress,
+      abi: AroNomination_ABI,
+      functionName: "getNomination",
+      args: [candidate],
+    }),
+    sdk.publicClient.readContract({
+      address: nominationAddress,
+      abi: AroNomination_ABI,
+      functionName: "threshold",
+    }),
   ])) as [
     [
       `0x${string}`,
