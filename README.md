@@ -1,6 +1,6 @@
 # @aromedia/contracts-sdk
 
-TypeScript SDK for the [Aro Media](https://aro.media) on-chain ecosystem. Wraps every contract in [`aromedia-blockchain-contracts`](https://github.com/aromediainc/aromedia-blockchain-contracts) — SBT identity, nomination workflow, RWA security token, assets registry, access manager, multisig, forced-transfer manager — behind a single typed API.
+TypeScript SDK for the [Aro Media](https://aro.media) on-chain ecosystem. Wraps every contract in [`aromedia-blockchain-contracts`](https://github.com/aromediainc/aromedia-blockchain-contracts) (SBT identity, nomination workflow, RWA security token, assets registry, access manager, multisig, forced-transfer manager) behind a single typed API.
 
 Designed for both server-side use (deploy helpers, indexers, jobs) and the Next.js dapp. React-specific code is gated behind a sub-path so consumers that don't need wagmi don't pull React in.
 
@@ -62,14 +62,14 @@ await mintSBTForApproved(sdk, {
 
 ## Entry points
 
-| Import path                          | What it gives you                                    |
-| :----------------------------------- | :--------------------------------------------------- |
-| `@aromedia/contracts-sdk`            | Clients, workflows, utils, types — no React          |
-| `@aromedia/contracts-sdk/hooks`      | wagmi React hooks (peer dep on wagmi + react)        |
-| `@aromedia/contracts-sdk/abis`       | Raw ABIs only (tree-shake friendly, zero runtime)    |
-| `@aromedia/contracts-sdk/addresses`  | Per-chain deployed-address registry                  |
-| `@aromedia/contracts-sdk/chains`     | Chain configs the SDK supports                       |
-| `@aromedia/contracts-sdk/workflows`  | High-level domain helpers                            |
+| Import path                           | What it gives you                                 |
+| :------------------------------------ | :------------------------------------------------ |
+| `@aromedia/contracts-sdk`           | Clients, workflows, utils, types — no React      |
+| `@aromedia/contracts-sdk/hooks`     | wagmi React hooks (peer dep on wagmi + react)     |
+| `@aromedia/contracts-sdk/abis`      | Raw ABIs only (tree-shake friendly, zero runtime) |
+| `@aromedia/contracts-sdk/addresses` | Per-chain deployed-address registry               |
+| `@aromedia/contracts-sdk/chains`    | Chain configs the SDK supports                    |
+| `@aromedia/contracts-sdk/workflows` | High-level domain helpers                         |
 
 ## Development
 
@@ -115,12 +115,6 @@ This repo uses [Changesets](https://github.com/changesets/changesets) for semver
 - `ci.yml` — typecheck + build on every PR.
 - `release.yml` — Version PR + npm publish on `main`.
 - `sync-abis.yml` — nightly job that clones the contracts repo, regenerates ABIs/addresses, and opens a PR if anything changed.
-
-## References
-
-- ARO KYC/AML/CFT Policy v1.0 — onboarding flow, tier definitions, hash anchoring (§6).
-- MEMO-KYC-PROVIDER — Didit Protocol selection, webhook → mint pipeline.
-- [aromedia-blockchain-contracts](https://github.com/aromediainc/aromedia-blockchain-contracts) — source contracts.
 
 ## License
 
