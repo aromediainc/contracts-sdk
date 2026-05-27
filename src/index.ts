@@ -10,13 +10,19 @@
 export {
   abis,
   AroSBT_ABI,
-  AroNomination_ABI,
   AroMediaRWA_ABI,
   AroMediaAssetsRegistry_ABI,
   AroMediaAccessManager_ABI,
   AroMediaIncMultiSig_ABI,
   ForcedTransferManager_ABI,
 } from "./generated/abis.js";
+/**
+ * @deprecated The on-chain `AroNomination` contract is being retired in
+ * favor of an admin-portal backend flow. This export will be removed in a
+ * future major release. See the migration notes in
+ * `src/hooks/useAroNomination.ts`.
+ */
+export { AroNomination_ABI } from "./generated/abis.js";
 export type { AroContractName } from "./generated/abis.js";
 export {
   addresses,
@@ -29,11 +35,15 @@ export type { AroChainId } from "./generated/addresses.js";
 export {
   AroTier,
   AroTierLabels,
-  NominationStatus,
-  NominationStatusLabels,
   ForcedTransferStatus,
   ForcedTransferStatusLabels,
 } from "./generated/types.js";
+/**
+ * @deprecated Tracks on-chain nomination state. The on-chain nomination flow
+ * is being retired (see `AroNomination_ABI` deprecation). Use the admin
+ * portal API status values instead.
+ */
+export { NominationStatus, NominationStatusLabels } from "./generated/types.js";
 
 // Chains
 export {
