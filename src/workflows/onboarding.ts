@@ -6,11 +6,22 @@ import { AroTier, NominationStatus } from "../generated/types.js";
 import { decodeAroError } from "../utils/errors.js";
 
 /**
- * Onboarding workflow helpers. These wrap multi-call sequences from the
- * ARO KYC/AML/CFT Policy §6 so the dapp does not have to re-implement the
- * choreography in three different places.
+ * Onboarding workflow helpers.
  *
- * Mental model (per Policy §6.3):
+ * STATUS: The on-chain nomination + admin-mint helpers below are
+ * @deprecated and slated for removal in a future major release. The
+ * nomination flow has moved to the admin backend (see the admin portal's
+ * /access-control + onboarding API), and SBT minting is now
+ * candidate-triggered against an EIP-712 voucher
+ * (`AroSBT.mintWithApproval`; see `../utils/mintApproval.ts` and
+ * `../hooks/useAroSBT.ts::useMintWithApproval`). The on-chain
+ * `AroNomination` contract is retained on Sepolia for compatibility but
+ * is no longer deployed to new networks.
+ *
+ * Status-read helpers (`checkMembershipStatus`, `describeOnboardingState`)
+ * remain useful regardless of the underlying flow and are NOT deprecated.
+ *
+ * Original mental model (kept for reference; pre-migration):
  *
  *   1. Existing member calls `nominateCandidate(candidate)`.
  *      The nominator's vouch counts as the first vouch automatically.
@@ -36,7 +47,12 @@ import { decodeAroError } from "../utils/errors.js";
 
 export interface MembershipStatus {
   hasSBT: boolean;
-  tier?: AroTier;
+  /**
+   * Opaque tier id (uint256) as returned by AroSBT.getMemberData. Compare
+   * with `tierLabel`, `tierAtLeast`, or the AroTier enum values for the
+   * conventional defaults; semantics live off-chain in the admin backend.
+   */
+  tier?: bigint;
   tokenId?: bigint;
   memberId?: bigint;
   issuanceDate?: bigint;
@@ -81,14 +97,14 @@ export async function checkMembershipStatus(
   })) as {
     memberId: bigint;
     issuanceDate: bigint;
-    tier: number;
+    tier: bigint; // uint256 since the Tier enum was retired; semantics off-chain
     kycHash: `0x${string}`;
   };
 
   return {
     hasSBT: true,
     tokenId,
-    tier: data.tier as AroTier,
+    tier: data.tier,
     memberId: data.memberId,
     issuanceDate: data.issuanceDate,
     kycHash: data.kycHash,
@@ -109,6 +125,10 @@ export interface NominationSnapshot {
 /**
  * Snapshot of the candidate's progress through the vouch flow. The dapp
  * shows this as "you need N more vouches" in the onboarding UI.
+ *
+ * @deprecated On-chain nomination is retired. Read this status from the
+ * admin portal's onboarding API instead. Removal planned in a future
+ * major release.
  */
 export async function getNominationSnapshot(
   sdk: AroSdk,
@@ -166,6 +186,9 @@ function pickAccount(
 }
 
 /**
+ * @deprecated On-chain nomination is retired. Use the admin portal's
+ * onboarding API instead. Removal planned in a future major release.
+ *
  * Send `nominate(candidate)` from the connected wallet. The contract
  * gates this behind "caller must already be an SBT holder"; we surface
  * the right user-facing message via `AroContractError`.
@@ -193,6 +216,10 @@ export async function nominateCandidate(
   }
 }
 
+/**
+ * @deprecated On-chain vouching is retired. Use the admin portal's
+ * onboarding API instead. Removal planned in a future major release.
+ */
 export async function vouchForCandidate(
   sdk: AroSdk,
   candidate: `0x${string}`,
@@ -217,6 +244,9 @@ export async function vouchForCandidate(
 }
 
 /**
+ * @deprecated On-chain nomination is retired. The admin portal handles
+ * rejections in its backend. Removal planned in a future major release.
+ *
  * Admin path: clear (reject) a nomination. Restricted to authorized roles
  * via AccessManager; will revert with AccessManagedUnauthorized if the
  * caller lacks the role.
@@ -250,12 +280,23 @@ export interface MintSBTOpts {
   kycHash: `0x${string}`;
   /** Off-chain profile metadata URI (ipfs://... or https://...). */
   metadataURI: string;
-  /** Initial tier (defaults to STANDARD per Policy §6.1). */
-  tier?: AroTier;
+  /**
+   * Initial tier id (opaque uint256; defaults to 0 / "Standard"). Accepts
+   * AroTier enum values for the conventional defaults, or any bigint id
+   * defined off-chain by the admin backend.
+   */
+  tier?: bigint | AroTier;
   account?: Account | `0x${string}`;
 }
 
 /**
+ * @deprecated SBT minting is now candidate-triggered against an EIP-712
+ * voucher (`AroSBT.mintWithApproval`). The admin backend issues vouchers
+ * via `signMintApproval` in `../utils/mintApproval`, and the candidate
+ * submits via the `useMintWithApproval` hook in `../hooks/useAroSBT`.
+ * The direct admin mint below remains gated by ROLE_MINTER but is the
+ * legacy path; removal planned in a future major release.
+ *
  * Admin-only: mint the SBT for an approved candidate. The contract gates
  * this behind ROLE_MINTER via AccessManager (per AroMediaAccessManager).
  *
@@ -271,7 +312,12 @@ export async function mintSBTForApproved(
     throw new Error("mintSBTForApproved requires a walletClient on the SDK");
   }
   const wallet = sdk.walletClient;
-  const tier = opts.tier ?? AroTier.STANDARD;
+  const tier: bigint =
+    opts.tier === undefined
+      ? 0n
+      : typeof opts.tier === "bigint"
+        ? opts.tier
+        : BigInt(opts.tier);
   try {
     return await wallet.writeContract({
       account: pickAccount(wallet, opts.account),

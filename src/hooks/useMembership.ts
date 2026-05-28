@@ -65,7 +65,7 @@ export function useMembership(wallet: `0x${string}` | undefined): {
         | {
             memberId: bigint;
             issuanceDate: bigint;
-            tier: number;
+            tier: bigint; // uint256 since the Tier enum was retired
             kycHash: `0x${string}`;
           }
         | undefined;
@@ -73,7 +73,7 @@ export function useMembership(wallet: `0x${string}` | undefined): {
         step: "member" as OnboardingStep,
         membership: {
           hasSBT: true,
-          tier: md?.tier as AroTier | undefined,
+          tier: md?.tier,
           memberId: md?.memberId,
           issuanceDate: md?.issuanceDate,
           kycHash: md?.kycHash,
