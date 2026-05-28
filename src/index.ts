@@ -71,3 +71,11 @@ export * from "./workflows/index.js";
 export { computeKycHash, type KycPayload } from "./utils/kycHash.js";
 export { tierAtLeast, tierLabel, tierRequirements } from "./utils/tiers.js";
 export { decodeAroError, AroContractError } from "./utils/errors.js";
+export {
+  mintApprovalDomain,
+  mintApprovalTypedData,
+  signMintApproval,
+  MINT_APPROVAL_TYPES,
+  type MintApprovalPayload,
+  type SignedMintApproval,
+} from "./utils/mintApproval.js";

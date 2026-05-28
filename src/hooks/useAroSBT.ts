@@ -55,3 +55,30 @@ export function useMemberData(
 export function useMintSBT() {
   return useWriteContract();
 }
+
+/**
+ * Candidate-side write hook for AroSBT.mintWithApproval.
+ *
+ * The candidate submits an admin-issued EIP-712 voucher (see
+ * `signMintApproval` in `../utils/mintApproval`) and its signature; the
+ * contract recovers the approver, checks ROLE_MINTER, marks the voucher
+ * nullified, and mints the SBT to msg.sender. The candidate's wallet
+ * does NOT need any role — the gate is the signature.
+ *
+ * Usage:
+ *
+ * ```tsx
+ * const addrs = useAroAddresses()
+ * const { writeContractAsync } = useMintWithApproval()
+ *
+ * await writeContractAsync({
+ *   address: addrs!.AroSBT,
+ *   abi: AroSBT_ABI,
+ *   functionName: "mintWithApproval",
+ *   args: [approval, signature],
+ * })
+ * ```
+ */
+export function useMintWithApproval() {
+  return useWriteContract();
+}
