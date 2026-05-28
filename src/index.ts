@@ -15,6 +15,8 @@ export {
   AroMediaAccessManager_ABI,
   AroMediaIncMultiSig_ABI,
   ForcedTransferManager_ABI,
+  cAROUSD_ABI,
+  AroLiquidityCommitment_ABI,
 } from "./generated/abis.js";
 /**
  * @deprecated The on-chain `AroNomination` contract is being retired in

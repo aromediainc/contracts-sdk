@@ -2,7 +2,15 @@
 // Source of truth: packages/sdk/scripts/generate.ts
 // Re-run with `npm run sdk:generate` from the repo root.
 
-/** Mirrors AroSBT.Tier. */
+/**
+ * Conventional default tier labels for AroSBT membership.
+ *
+ * On-chain, the SBT's `tier` is now an opaque `uint256` whose semantics
+ * are defined off-chain by the admin backend (no on-chain logic branches
+ * on it). These enum values are the conventional defaults the dapp
+ * displays when no off-chain override is available; new tier ids can be
+ * introduced server-side without a contract upgrade or SDK release.
+ */
 export enum AroTier {
   STANDARD = 0,
   VERIFIED = 1,
@@ -17,7 +25,12 @@ export const AroTierLabels: Record<AroTier, string> = {
   [AroTier.FOUNDING]: "Founding",
 };
 
-/** Mirrors AroNomination.NominationStatus. */
+/**
+ * @deprecated Mirrors AroNomination.NominationStatus. The on-chain
+ * nomination flow is being retired in favor of an admin-portal backend
+ * flow (see the AroNomination_ABI deprecation). New consumers should
+ * read status from the admin portal API instead.
+ */
 export enum NominationStatus {
   NONE = 0,
   PENDING = 1,
@@ -25,6 +38,7 @@ export enum NominationStatus {
   CLEARED = 3,
 }
 
+/** @deprecated See NominationStatus. */
 export const NominationStatusLabels: Record<NominationStatus, string> = {
   [NominationStatus.NONE]: "Not nominated",
   [NominationStatus.PENDING]: "Pending vouches",

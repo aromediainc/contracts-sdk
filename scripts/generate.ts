@@ -53,6 +53,12 @@ const CONTRACTS: Array<{
   name: string;
   /** Ignition module key as written into deployed_addresses.json. */
   ignitionKey: string;
+  /**
+   * Sub-directory under `artifacts/contracts/` where this contract's
+   * artifact lives. Defaults to no sub-dir (top-level `contracts/`).
+   * Confidential contracts live under `confidential/`.
+   */
+  subdir?: string;
 }> = [
   { name: "AroMediaIncMultiSig", ignitionKey: "AroMediaIncMultiSigModule#AroMediaIncMultiSig" },
   { name: "AroMediaAccessManager", ignitionKey: "AroMediaAccessManagerModule#AroMediaAccessManager" },
@@ -61,6 +67,8 @@ const CONTRACTS: Array<{
   { name: "ForcedTransferManager", ignitionKey: "ForcedTransferManagerModule#ForcedTransferManager" },
   { name: "AroSBT", ignitionKey: "AroSBTModule#AroSBT" },
   { name: "AroNomination", ignitionKey: "AroNominationModule#AroNomination" },
+  { name: "cAROUSD", ignitionKey: "cAROUSDModule#cAROUSD", subdir: "confidential" },
+  { name: "AroLiquidityCommitment", ignitionKey: "AroLiquidityCommitmentModule#AroLiquidityCommitment", subdir: "confidential" },
 ];
 
 /**
@@ -97,8 +105,9 @@ function ensureOutDir(): void {
   }
 }
 
-function readArtifact(name: string): { abi: unknown[] } | null {
-  const artifactPath = join(ARTIFACTS_DIR, `${name}.sol`, `${name}.json`);
+function readArtifact(name: string, subdir?: string): { abi: unknown[] } | null {
+  const base = subdir ? join(ARTIFACTS_DIR, subdir) : ARTIFACTS_DIR;
+  const artifactPath = join(base, `${name}.sol`, `${name}.json`);
   if (!existsSync(artifactPath)) {
     console.warn(`  ⚠ missing artifact for ${name} (${artifactPath})`);
     return null;
@@ -124,8 +133,8 @@ function emitAbis(): void {
   const exportedNames: string[] = [];
   let foundCount = 0;
 
-  for (const { name } of CONTRACTS) {
-    const artifact = readArtifact(name);
+  for (const { name, subdir } of CONTRACTS) {
+    const artifact = readArtifact(name, subdir);
     if (!artifact) continue;
     foundCount += 1;
 
@@ -227,7 +236,15 @@ function emitTypes(): void {
   // These mirror the on-chain enums one-for-one so callers can use named
   // values instead of magic numbers in the dapp.
   const content = `${header("generate.ts")}
-/** Mirrors AroSBT.Tier. */
+/**
+ * Conventional default tier labels for AroSBT membership.
+ *
+ * On-chain, the SBT's \`tier\` is now an opaque \`uint256\` whose semantics
+ * are defined off-chain by the admin backend (no on-chain logic branches
+ * on it). These enum values are the conventional defaults the dapp
+ * displays when no off-chain override is available; new tier ids can be
+ * introduced server-side without a contract upgrade or SDK release.
+ */
 export enum AroTier {
   STANDARD = 0,
   VERIFIED = 1,
@@ -242,7 +259,12 @@ export const AroTierLabels: Record<AroTier, string> = {
   [AroTier.FOUNDING]: "Founding",
 };
 
-/** Mirrors AroNomination.NominationStatus. */
+/**
+ * @deprecated Mirrors AroNomination.NominationStatus. The on-chain
+ * nomination flow is being retired in favor of an admin-portal backend
+ * flow (see the AroNomination_ABI deprecation). New consumers should
+ * read status from the admin portal API instead.
+ */
 export enum NominationStatus {
   NONE = 0,
   PENDING = 1,
@@ -250,6 +272,7 @@ export enum NominationStatus {
   CLEARED = 3,
 }
 
+/** @deprecated See NominationStatus. */
 export const NominationStatusLabels: Record<NominationStatus, string> = {
   [NominationStatus.NONE]: "Not nominated",
   [NominationStatus.PENDING]: "Pending vouches",
