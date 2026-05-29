@@ -77,6 +77,17 @@ jobs:
 
       - name: Compile contracts
         working-directory: contracts-repo
+        # Hardhat validates `networks[*].accounts` at config-load time, even
+        # for `compile`. The contracts repo reads private keys from env, so
+        # we inject a throwaway key to satisfy validation. This key is never
+        # used to sign anything — we only run `compile`.
+        env:
+          PRIVATE_KEY: "0x0000000000000000000000000000000000000000000000000000000000000001"
+          MAINNET_PRIVATE_KEY: "0x0000000000000000000000000000000000000000000000000000000000000001"
+          SEPOLIA_PRIVATE_KEY: "0x0000000000000000000000000000000000000000000000000000000000000001"
+          BASE_MAINNET_PRIVATE_KEY: "0x0000000000000000000000000000000000000000000000000000000000000001"
+          BASE_SEPOLIA_PRIVATE_KEY: "0x0000000000000000000000000000000000000000000000000000000000000001"
+          BASE_LOCAL_PRIVATE_KEY: "0x0000000000000000000000000000000000000000000000000000000000000001"
         run: npx hardhat compile
 
       - name: Regenerate ABIs + addresses
