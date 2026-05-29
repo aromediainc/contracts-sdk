@@ -1715,86 +1715,6 @@ export const AroMediaAccessManager_ABI = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "rwaToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "assetsRegistry",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "forcedTransferManager",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "sbt",
-        "type": "address"
-      }
-    ],
-    "name": "configureAccessControlForAllContracts",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "assetsRegistry",
-        "type": "address"
-      }
-    ],
-    "name": "configureAccessControlForAssetsRegistry",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "forcedTransferManager",
-        "type": "address"
-      }
-    ],
-    "name": "configureAccessControlForForcedTransferManager",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "rwaToken",
-        "type": "address"
-      }
-    ],
-    "name": "configureAccessControlForRWAToken",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "sbt",
-        "type": "address"
-      }
-    ],
-    "name": "configureAccessControlForSBT",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "caller",
         "type": "address"
       },
@@ -2440,6 +2360,104 @@ export const AroMediaAccessManager_ABI = [
       }
     ],
     "name": "updateAuthority",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "rwaToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "assetsRegistry",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "forcedTransferManager",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "sbt",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "nomination",
+        "type": "address"
+      }
+    ],
+    "name": "wireAllContracts",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "assetsRegistry",
+        "type": "address"
+      }
+    ],
+    "name": "wireAssetsRegistry",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "forcedTransferManager",
+        "type": "address"
+      }
+    ],
+    "name": "wireForcedTransferManager",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "nomination",
+        "type": "address"
+      }
+    ],
+    "name": "wireNomination",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "rwaToken",
+        "type": "address"
+      }
+    ],
+    "name": "wireRWAToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "sbt",
+        "type": "address"
+      }
+    ],
+    "name": "wireSBT",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -5579,82 +5597,6 @@ export const AroSBT_ABI = [
     "type": "error"
   },
   {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "approvalDigest",
-        "type": "bytes32"
-      }
-    ],
-    "name": "ApprovalAlreadyUsed",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "expected",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
-      }
-    ],
-    "name": "ApprovalCandidateMismatch",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint64",
-        "name": "deadline",
-        "type": "uint64"
-      }
-    ],
-    "name": "ApprovalExpired",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "signer",
-        "type": "address"
-      }
-    ],
-    "name": "ApprovalSignerNotApprover",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ECDSAInvalidSignature",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "length",
-        "type": "uint256"
-      }
-    ],
-    "name": "ECDSAInvalidSignatureLength",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "s",
-        "type": "bytes32"
-      }
-    ],
-    "name": "ECDSAInvalidSignatureS",
-    "type": "error"
-  },
-  {
     "inputs": [],
     "name": "ERC721EnumerableForbiddenBatchMint",
     "type": "error"
@@ -5789,11 +5731,6 @@ export const AroSBT_ABI = [
     "type": "error"
   },
   {
-    "inputs": [],
-    "name": "InvalidShortString",
-    "type": "error"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -5807,17 +5744,6 @@ export const AroSBT_ABI = [
   {
     "inputs": [],
     "name": "SoulboundTransferBlocked",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "str",
-        "type": "string"
-      }
-    ],
-    "name": "StringTooLong",
     "type": "error"
   },
   {
@@ -5904,12 +5830,6 @@ export const AroSBT_ABI = [
   },
   {
     "anonymous": false,
-    "inputs": [],
-    "name": "EIP712DomainChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
     "inputs": [
       {
         "indexed": false,
@@ -5944,9 +5864,9 @@ export const AroSBT_ABI = [
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "enum AroSBT.Tier",
         "name": "tier",
-        "type": "uint256"
+        "type": "uint8"
       },
       {
         "indexed": false,
@@ -6000,37 +5920,6 @@ export const AroSBT_ABI = [
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "candidate",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "approvalDigest",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "approver",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "bytes32",
-        "name": "nominationId",
-        "type": "bytes32"
-      }
-    ],
-    "name": "MintApprovalConsumed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": false,
         "internalType": "address",
         "name": "account",
@@ -6057,15 +5946,15 @@ export const AroSBT_ABI = [
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "enum AroSBT.Tier",
         "name": "oldTier",
-        "type": "uint256"
+        "type": "uint8"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "enum AroSBT.Tier",
         "name": "newTier",
-        "type": "uint256"
+        "type": "uint8"
       }
     ],
     "name": "TierUpdated",
@@ -6123,19 +6012,6 @@ export const AroSBT_ABI = [
     "type": "event"
   },
   {
-    "inputs": [],
-    "name": "APPROVER_ROLE",
-    "outputs": [
-      {
-        "internalType": "uint64",
-        "name": "",
-        "type": "uint64"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -6186,49 +6062,6 @@ export const AroSBT_ABI = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "eip712Domain",
-    "outputs": [
-      {
-        "internalType": "bytes1",
-        "name": "fields",
-        "type": "bytes1"
-      },
-      {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "version",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "chainId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "verifyingContract",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "salt",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "extensions",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -6270,9 +6103,9 @@ export const AroSBT_ABI = [
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
+            "internalType": "enum AroSBT.Tier",
             "name": "tier",
-            "type": "uint256"
+            "type": "uint8"
           },
           {
             "internalType": "bytes32",
@@ -6311,9 +6144,9 @@ export const AroSBT_ABI = [
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
+            "internalType": "enum AroSBT.Tier",
             "name": "tier",
-            "type": "uint256"
+            "type": "uint8"
           },
           {
             "internalType": "bytes32",
@@ -6420,11 +6253,6 @@ export const AroSBT_ABI = [
         "internalType": "string",
         "name": "metadataURI",
         "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tier",
-        "type": "uint256"
       }
     ],
     "name": "mint",
@@ -6454,70 +6282,14 @@ export const AroSBT_ABI = [
         "internalType": "string",
         "name": "metadataURI",
         "type": "string"
+      },
+      {
+        "internalType": "enum AroSBT.Tier",
+        "name": "tier",
+        "type": "uint8"
       }
     ],
     "name": "mint",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "candidate",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tier",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "kycHash",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "nominationId",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "string",
-            "name": "metadataURI",
-            "type": "string"
-          },
-          {
-            "internalType": "uint64",
-            "name": "deadline",
-            "type": "uint64"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "nonce",
-            "type": "bytes32"
-          }
-        ],
-        "internalType": "struct AroSBT.MintApproval",
-        "name": "approval",
-        "type": "tuple"
-      },
-      {
-        "internalType": "bytes",
-        "name": "signature",
-        "type": "bytes"
-      }
-    ],
-    "name": "mintWithApproval",
     "outputs": [
       {
         "internalType": "uint256",
@@ -6683,9 +6455,9 @@ export const AroSBT_ABI = [
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "enum AroSBT.Tier",
         "name": "newTier",
-        "type": "uint256"
+        "type": "uint8"
       }
     ],
     "name": "setTier",
@@ -6878,25 +6650,6 @@ export const AroSBT_ABI = [
     "name": "updateKycHash",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "name": "usedApprovals",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   }
 ] as const;
