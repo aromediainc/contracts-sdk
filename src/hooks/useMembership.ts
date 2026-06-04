@@ -65,7 +65,7 @@ export function useMembership(wallet: `0x${string}` | undefined): {
         | {
             memberId: bigint;
             issuanceDate: bigint;
-            tier: bigint; // uint256 since the Tier enum was retired
+            tier: number; // AroSBT.Tier enum (uint8)
             kycHash: `0x${string}`;
           }
         | undefined;

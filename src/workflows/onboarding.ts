@@ -48,11 +48,11 @@ import { decodeAroError } from "../utils/errors.js";
 export interface MembershipStatus {
   hasSBT: boolean;
   /**
-   * Opaque tier id (uint256) as returned by AroSBT.getMemberData. Compare
-   * with `tierLabel`, `tierAtLeast`, or the AroTier enum values for the
-   * conventional defaults; semantics live off-chain in the admin backend.
+   * Tier id (AroSBT.Tier enum, uint8) as returned by AroSBT.getMemberData.
+   * Compare with `tierLabel`, `tierAtLeast`, or the AroTier enum values for
+   * the conventional defaults; semantics live off-chain in the admin backend.
    */
-  tier?: bigint;
+  tier?: number;
   tokenId?: bigint;
   memberId?: bigint;
   issuanceDate?: bigint;
@@ -97,7 +97,7 @@ export async function checkMembershipStatus(
   })) as {
     memberId: bigint;
     issuanceDate: bigint;
-    tier: bigint; // uint256 since the Tier enum was retired; semantics off-chain
+    tier: number; // AroSBT.Tier enum (uint8); semantics off-chain
     kycHash: `0x${string}`;
   };
 
@@ -281,11 +281,11 @@ export interface MintSBTOpts {
   /** Off-chain profile metadata URI (ipfs://... or https://...). */
   metadataURI: string;
   /**
-   * Initial tier id (opaque uint256; defaults to 0 / "Standard"). Accepts
-   * AroTier enum values for the conventional defaults, or any bigint id
-   * defined off-chain by the admin backend.
+   * Initial tier id (AroSBT.Tier enum, uint8; defaults to 0 / "Standard").
+   * Accepts AroTier enum values for the conventional defaults, or any tier
+   * id defined off-chain by the admin backend.
    */
-  tier?: bigint | AroTier;
+  tier?: number | AroTier;
   account?: Account | `0x${string}`;
 }
 
@@ -312,12 +312,12 @@ export async function mintSBTForApproved(
     throw new Error("mintSBTForApproved requires a walletClient on the SDK");
   }
   const wallet = sdk.walletClient;
-  const tier: bigint =
+  const tier: number =
     opts.tier === undefined
-      ? 0n
+      ? 0
       : typeof opts.tier === "bigint"
-        ? opts.tier
-        : BigInt(opts.tier);
+        ? Number(opts.tier)
+        : opts.tier;
   try {
     return await wallet.writeContract({
       account: pickAccount(wallet, opts.account),
