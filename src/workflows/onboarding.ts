@@ -97,14 +97,14 @@ export async function checkMembershipStatus(
   })) as {
     memberId: bigint;
     issuanceDate: bigint;
-    tier: number; // AroSBT.Tier enum (uint8); semantics off-chain
+    tier: bigint; // AroSBT.Tier enum (uint256); semantics off-chain
     kycHash: `0x${string}`;
   };
 
   return {
     hasSBT: true,
     tokenId,
-    tier: data.tier,
+    tier: Number(data.tier),
     memberId: data.memberId,
     issuanceDate: data.issuanceDate,
     kycHash: data.kycHash,
@@ -312,12 +312,12 @@ export async function mintSBTForApproved(
     throw new Error("mintSBTForApproved requires a walletClient on the SDK");
   }
   const wallet = sdk.walletClient;
-  const tier: number =
+  const tier: bigint =
     opts.tier === undefined
-      ? 0
+      ? 0n
       : typeof opts.tier === "bigint"
-        ? Number(opts.tier)
-        : opts.tier;
+        ? opts.tier
+        : BigInt(opts.tier);
   try {
     return await wallet.writeContract({
       account: pickAccount(wallet, opts.account),
