@@ -1,11 +1,11 @@
-import { useMemo } from "react";
-import { useReadContracts } from "wagmi";
+import { AroTier, NominationStatus } from "../generated/types.js";
+import type { OnboardingState, OnboardingStep } from "../workflows/onboarding.js";
 
 import { AroNomination_ABI } from "../generated/abis.js";
 import { AroSBT_ABI } from "../generated/abis.js";
-import { AroTier, NominationStatus } from "../generated/types.js";
-import type { OnboardingState, OnboardingStep } from "../workflows/onboarding.js";
 import { useAroAddresses } from "./useAroAddresses.js";
+import { useMemo } from "react";
+import { useReadContracts } from "wagmi";
 
 /**
  * The hook the access-gate page reaches for. Batches the three reads it

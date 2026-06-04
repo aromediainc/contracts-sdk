@@ -1,8 +1,8 @@
 import type { Account, Hex, WalletClient } from "viem";
-
-import type { AroSdk } from "../clients/createAroSdk.js";
 import { AroNomination_ABI, AroSBT_ABI } from "../generated/abis.js";
 import { AroTier, NominationStatus } from "../generated/types.js";
+
+import type { AroSdk } from "../clients/createAroSdk.js";
 import { decodeAroError } from "../utils/errors.js";
 
 /**
