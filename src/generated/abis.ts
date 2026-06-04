@@ -950,7 +950,7 @@ export const AroMediaAccessManager_ABI = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "multiSigOwner",
+        "name": "initialAdmin",
         "type": "address"
       }
     ],
