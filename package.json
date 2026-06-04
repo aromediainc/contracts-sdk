@@ -20,14 +20,14 @@
       "require": "./dist/hooks/index.cjs"
     },
     "./abis": {
-      "types": "./dist/abis.d.ts",
-      "import": "./dist/abis.js",
-      "require": "./dist/abis.cjs"
+      "types": "./dist/generated/abis.d.ts",
+      "import": "./dist/generated/abis.js",
+      "require": "./dist/generated/abis.cjs"
     },
     "./addresses": {
-      "types": "./dist/addresses.d.ts",
-      "import": "./dist/addresses.js",
-      "require": "./dist/addresses.cjs"
+      "types": "./dist/generated/addresses.d.ts",
+      "import": "./dist/generated/addresses.js",
+      "require": "./dist/generated/addresses.cjs"
     },
     "./chains": {
       "types": "./dist/chains.d.ts",
