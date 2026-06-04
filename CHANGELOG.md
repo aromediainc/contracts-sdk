@@ -1,5 +1,14 @@
 # @aromedia/contracts-sdk
 
+## 1.0.3
+
+### Patch Changes
+
+- [`33b353c`](https://github.com/aromediainc/contracts-sdk/commit/33b353c3ff5a36d42f683ac0853d2a87740ee0dd) Thanks [@zaghadon](https://github.com/zaghadon)! - Fix `tier` type mismatches in the onboarding workflow. `AroSBT.getMemberData`
+  returns `tier` as a `uint256` (viem `bigint`), so the internal cast and the
+  `mint` call now use `bigint` and convert to `number` only for the public
+  `MembershipStatus.tier` field. Resolves the DTS build errors (TS2352/TS2322).
+
 ## 1.0.2
 
 ### Patch Changes
