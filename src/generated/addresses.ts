@@ -42,8 +42,8 @@ export const addresses: Record<AroChainId, Record<AroContractName, `0x${string}`
     ForcedTransferManager: "0x7613e2Bc20E697EBa02Bf7891a96c6857acB5ED3" as `0x${string}`,
     AroSBT: "0x4DdC4C814120AB70A4Bc9C1Cdf3a995e4A0bD7f7" as `0x${string}`,
     AroNomination: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-    cAROUSD: "0x9E918271ef63Ed2449628c62b09EB7A87566f475" as `0x${string}`,
-    AroLiquidityCommitment: "0x0b79Af3403e053917D9579671b6239a502462B7e" as `0x${string}`,
+    cAROUSD: "0x5966c30B33D05222D63f359a81910239f594e09C" as `0x${string}`,
+    AroLiquidityCommitment: "0xC7F864De358E2571b969FfF461Cc4606A8a30ED2" as `0x${string}`,
   },
   8453: { // base
     AroMediaIncMultiSig: "0x0000000000000000000000000000000000000000" as `0x${string}`,
