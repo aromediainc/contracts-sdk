@@ -30,8 +30,11 @@ jobs:
         with:
           # Changesets needs full history to compute changelogs and tags.
           fetch-depth: 0
-          # Use a PAT or GITHUB_TOKEN with workflow scope so the Version
-          # PR can re-trigger CI on its own commits.
+          # RELEASE_PAT (fine-grained PAT with contents + pull-requests
+          # write) is required because the enterprise policy forbids the
+          # built-in GITHUB_TOKEN from creating PRs. It also lets the
+          # Version PR's commits trigger CI, which GITHUB_TOKEN never does.
+          token: ${{ secrets.RELEASE_PAT || github.token }}
           persist-credentials: true
 
       - name: Setup Node
@@ -62,6 +65,7 @@ jobs:
           commit: "chore: version packages"
           title: "chore: version packages"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Must be the PAT, not the built-in token — see checkout step.
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PAT || github.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
