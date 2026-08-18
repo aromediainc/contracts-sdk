@@ -6,6 +6,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 # Cancel in-progress runs of this workflow for the same ref. Two pushes
 # to the same PR shouldn't have both CI runs racing.
 concurrency:
