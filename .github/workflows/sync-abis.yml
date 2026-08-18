@@ -38,8 +38,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           # peter-evans/create-pull-request needs a clean tree, but we also
-          # want a token that can push the PR branch.
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # want a token that can push the PR branch. RELEASE_PAT is required
+          # because the enterprise policy forbids the built-in GITHUB_TOKEN
+          # from creating PRs.
+          token: ${{ secrets.RELEASE_PAT || github.token }}
 
       - name: Checkout contracts repo
         uses: actions/checkout@v4
@@ -121,7 +123,8 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # Must be the PAT, not the built-in token — see checkout step.
+          token: ${{ secrets.RELEASE_PAT || github.token }}
           branch: chore/sync-abis
           base: main
           commit-message: "chore: sync ABIs from contracts repo"
