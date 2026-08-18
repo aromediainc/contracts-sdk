@@ -90,6 +90,11 @@
     "viem": "^2.21.0",
     "wagmi": "^3.6.10"
   },
+  "overrides": {
+    "tsup": {
+      "esbuild": "^0.28.1"
+    }
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true
