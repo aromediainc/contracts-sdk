@@ -24,15 +24,15 @@ export type AroChainId = (typeof SUPPORTED_CHAIN_IDS)[number];
  */
 export const addresses: Record<AroChainId, Record<AroContractName, `0x${string}`>> = {
   1: { // ethereum
-    AroMediaIncMultiSig: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-    AroMediaAccessManager: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-    AroMediaRWA: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-    AroMediaAssetsRegistry: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-    ForcedTransferManager: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-    AroSBT: "0x0000000000000000000000000000000000000000" as `0x${string}`,
+    AroMediaIncMultiSig: "0xbd4be1a7E2E262E8aa86a9094C84fb6171f41cfD" as `0x${string}`,
+    AroMediaAccessManager: "0xfA551cE5ED900C71289CE1695703A8307d5d9C50" as `0x${string}`,
+    AroMediaRWA: "0x78d53382E8bbE11E3c4D71Ba3758c64A3501E605" as `0x${string}`,
+    AroMediaAssetsRegistry: "0x342614aE69b9197bcDa2F74d501b4483c34F56c3" as `0x${string}`,
+    ForcedTransferManager: "0x0F6a7FA9e4353987991258A3e6A61Eb675C09238" as `0x${string}`,
+    AroSBT: "0x17b4e7740046B6b976f34996b4F8DA2085763D8c" as `0x${string}`,
     AroNomination: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-    cAROUSD: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-    AroLiquidityCommitment: "0x0000000000000000000000000000000000000000" as `0x${string}`,
+    cAROUSD: "0x432aD3CE16Fc6058e6fA6C730f40e7bBa0336959" as `0x${string}`,
+    AroLiquidityCommitment: "0x1dab83E3ccE56524a70f99A01547C8D43D42cE82" as `0x${string}`,
   },
   11155111: { // sepolia
     AroMediaIncMultiSig: "0x192DDDdE31Cd3d9B0aCA76859D7e22FFb4Eab7a4" as `0x${string}`,
